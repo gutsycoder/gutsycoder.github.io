@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+
+<body>
+
+
+<h1>The button Element</h1>
+
+<button type="button" onclick="shareaudio();">Click Me!</button>
+</body>
+</html>
+<script type = "text/javascript">
+ function shareaudio() {
+  fetch("/tf_nemesis.mp3")
+  .then(function(response) {
+    return response.blob()
+  }).then(function(blob){
+    var file = new File([blob],"tf_nemesis.mp3",{type:'audio/mp3'});
+    var filesArray=[file];
+
+    if(navigator.canShare&&navigator.canShare({files:filesArray})) {
+      navigator.share({
+        text:'sending audio',
+        files:filesArray,
+        title:"Project_MOM",
+        url:'some_url'
+      });
+      alert("Working fine till here");
+    }
+    else{
+      alert("Not Working fine till here");
+    }
+
+  });
+
+
+}
+</script>
